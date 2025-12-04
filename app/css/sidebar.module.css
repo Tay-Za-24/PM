@@ -1,0 +1,15 @@
+@charset "utf-8";
+
+.sidebarWrap {
+    background: var(--clr-secondary);
+    height: 100vh;
+    color: black;
+    overflow: scroll;
+    padding: 10px;
+}
+
+.workspaceTitle {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
