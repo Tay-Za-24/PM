@@ -1,6 +1,7 @@
 import styles from '../css/sidebar.module.css';
 import icoBatman from '../../public/images/batman.jpg';
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default function Sidebar () {
     return (
@@ -14,6 +15,9 @@ export default function Sidebar () {
                 />
                 Sample Workspace
             </h1>
+            <Link href="/home">
+                HOME
+            </Link>
         </div>
     )
 }

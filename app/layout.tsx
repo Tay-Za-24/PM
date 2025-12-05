@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Poppins } from "next/font/google";
 import "./globals.css";
+import Sidebar from "./component/sidebar";
 
 const fontInter = Inter({
   variable: "--font-inter",
@@ -32,6 +33,7 @@ export default function RootLayout({
   return (
     <html lang="en">
     <body className={`${fontInter.variable} ${fontPoppins.variable} antialiased`}>
+      <Sidebar />
       {children}
     </body>
     </html>
