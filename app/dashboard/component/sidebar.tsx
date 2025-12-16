@@ -1,5 +1,5 @@
 import styles from '../css/sidebar.module.css';
-import icoBatman from '../../public/images/batman.jpg';
+import icoBatman from '../../../public/images/batman.jpg';
 import Image from 'next/image';
 import Link from 'next/link';
 
