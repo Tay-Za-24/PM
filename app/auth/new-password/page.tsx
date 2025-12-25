@@ -3,11 +3,7 @@
 import styles from "../css/auth.module.css";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import icoGoogle from "../../../public/images/icons/ico-google.svg";
 import { z } from "zod";
-import { useState } from "react";
-import Modal from "../components/modal";
-import AnimatedText from "../components/animText";
 
 const loginSchema = z.object({
   email: z.string().min(3, "Email must be at least 3 characters"),
@@ -29,8 +25,6 @@ export default function Login() {
     // call server action here
     console.log(data);
   };
-
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
     <>
@@ -61,7 +55,9 @@ export default function Login() {
               <label htmlFor="email">Email</label>
             </div>
             {errors.email && (
-              <p className={styles.error}>{errors.email.message}</p>
+              <p className={styles.error}>
+                {errors.email.message}
+              </p>
             )}
 
             {/* Password */}
@@ -78,7 +74,9 @@ export default function Login() {
               <label htmlFor="password">Password</label>
             </div>
             {errors.password && (
-              <p className={styles.error}>{errors.password.message}</p>
+              <p className={styles.error}>
+                {errors.password.message}
+              </p>
             )}
 
             {/* Button */}
@@ -88,32 +86,11 @@ export default function Login() {
                 className={styles.submitBtn}
                 disabled={isSubmitting}
               >
-                {isSubmitting ? "Loading..." : "Continue"}
-              </button>
-              <button
-                type="button"
-                onClick={() => setIsModalOpen(true)}
-                className={styles.submitBtn}
-                disabled={isSubmitting}
-              >
-                <div className={styles.btnIco}>
-                  <img src={icoGoogle.src} />
-                </div>
-                <span className={styles.btnText}>
-                  {isSubmitting ? "Loading..." : "Continue with Google"}
-                </span>
+                {isSubmitting ? "Logging in..." : "Login"}
               </button>
             </div>
           </form>
         </div>
-        <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-          <AnimatedText
-            texts={[
-              "Still Under Construction.",
-              "Please Wait."
-            ]}
-          />
-        </Modal>
       </section>
     </>
   );

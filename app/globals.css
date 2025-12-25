@@ -44,3 +44,19 @@ body {
   font-weight: 700;
 }
 
+.animWrap {
+    position: relative;
+}
+
+.indicator {
+    width: .625rem;
+    height: .3125rem;
+    background-color: var(--background);
+    display: inline-block;
+    position: absolute;
+    bottom: 0;
+}
+
+.char {
+  display: inline-block;
+}
