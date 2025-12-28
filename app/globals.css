@@ -49,12 +49,13 @@ body {
 }
 
 .indicator {
-    width: .625rem;
-    height: .3125rem;
+    width: .7em;
+    height: .25em;
     background-color: var(--background);
     display: inline-block;
     position: absolute;
     bottom: 0;
+    mix-blend-mode: difference;
 }
 
 .char {

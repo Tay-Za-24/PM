@@ -2,7 +2,7 @@
 
 import React, { useEffect } from "react";
 import { createPortal } from "react-dom";
-import styles from "../css/auth.module.css";
+import styles from "../auth/css/auth.module.css";
 
 type ModalProps = {
   isOpen: boolean;

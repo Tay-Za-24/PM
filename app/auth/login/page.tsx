@@ -6,8 +6,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import icoGoogle from "../../../public/images/icons/ico-google.svg";
 import { z } from "zod";
 import { useState } from "react";
-import Modal from "../components/modal";
-import AnimatedText from "../components/animText";
+import Modal from "../../components/modal";
+import AnimatedText from "../../components/animText";
+import Link from "next/link";
 
 const loginSchema = z.object({
   email: z.string().min(3, "Email must be at least 3 characters"),
@@ -40,7 +41,14 @@ export default function Login() {
 
       <section className={styles.authSection}>
         <div className={styles.formWrap}>
-          <h2 className={`${styles.authTitle} fw-bold`}>Login</h2>
+          <h2 className={`${styles.authTitle} fw-bold`}>
+            <AnimatedText
+            texts={[
+              'Login'
+            ]}
+            extraClass="nothing"
+            />
+          </h2>
 
           <form
             className={styles.authForm}
@@ -100,18 +108,24 @@ export default function Login() {
                   <img src={icoGoogle.src} />
                 </div>
                 <span className={styles.btnText}>
-                  {isSubmitting ? "Loading..." : "Continue with Google"}
+                  Continue with Google
                 </span>
               </button>
             </div>
           </form>
+          <p>
+            New here?
+            <Link href="/register">
+              Create an account.
+            </Link>
+          </p>
         </div>
         <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
           <AnimatedText
             texts={[
-              "Still Under Construction.",
-              "Please Wait."
+              "Still Under Construction."
             ]}
+            extraClass="dummy"
           />
         </Modal>
       </section>

@@ -4,6 +4,10 @@ import styles from "../css/auth.module.css";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import Modal from "../../components/modal";
+import icoGoogle from "../../../public/images/icons/ico-google.svg";
+import AnimatedText from "../../components/animText";
+import { useState } from "react";
 
 const loginSchema = z
   .object({
@@ -25,7 +29,7 @@ const loginSchema = z
 
 type LoginFormData = z.infer<typeof loginSchema>;
 
-export default function Login() {
+export default function Register() {
   const {
     register,
     handleSubmit,
@@ -39,6 +43,8 @@ export default function Login() {
     // server action
   };
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   return (
     <>
       <header>
@@ -47,7 +53,14 @@ export default function Login() {
 
       <section className={styles.authSection}>
         <div className={styles.formWrap}>
-          <h2 className={`${styles.authTitle} fw-bold`}>Create Account</h2>
+          <h2 className={`${styles.authTitle} fw-bold`}>
+            <AnimatedText
+            texts={[
+              'Create Account'
+            ]}
+            extraClass="nothing"
+            />
+          </h2>
 
           <form
             className={styles.authForm}
@@ -73,7 +86,7 @@ export default function Login() {
             {/* Email */}
             <div className={styles.inputWrap}>
               <input
-               placeholder=" "
+                placeholder=" "
                 id="email"
                 type="email"
                 autoComplete="email"
@@ -118,9 +131,7 @@ export default function Login() {
               <label htmlFor="confirmPassword">Confirm Password</label>
             </div>
             {errors.confirmPassword && (
-              <p className={styles.error}>
-                {errors.confirmPassword.message}
-              </p>
+              <p className={styles.error}>{errors.confirmPassword.message}</p>
             )}
 
             {/* Button */}
@@ -132,9 +143,26 @@ export default function Login() {
               >
                 {isSubmitting ? "Submitting..." : "Create Account"}
               </button>
+              <button
+                type="button"
+                onClick={() => setIsModalOpen(true)}
+                className={styles.submitBtn}
+                disabled={isSubmitting}
+              >
+                <div className={styles.btnIco}>
+                  <img src={icoGoogle.src} />
+                </div>
+                <span className={styles.btnText}>Continue with Google</span>
+              </button>
             </div>
           </form>
         </div>
+        <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+          <AnimatedText
+            texts={["Still Under Construction."]}
+            extraClass="dummy"
+          />
+        </Modal>
       </section>
     </>
   );
