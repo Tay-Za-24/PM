@@ -1,9 +1,5 @@
-import Header from "./component/header";
-import Sidebar from "./component/sidebar";
+import { redirect } from "next/navigation";
 
 export default function Home() {
-  return (
-    <>
-    </>
-  );
+  redirect("/auth/register");
 }

@@ -1,24 +1,17 @@
 import type { Metadata } from "next";
 import { Inter, Poppins } from "next/font/google";
 import "./globals.css";
-import Sidebar from "./component/sidebar";
 
 const fontInter = Inter({
-  variable: "--font-inter",
+  variable: "--font-primary",
   subsets: ["latin"],
 });
 
 const fontPoppins = Poppins({
   weight: ["400", "600"],
-  variable: "--font-poppins",
+  variable: "--font-secondary",
   subsets: ["latin"],
 });
-
-
-// const geistMono = Geist_Mono({
-//   variable: "--font-geist-mono",
-//   subsets: ["latin"],
-// });
 
 export const metadata: Metadata = {
   title: "Project Management",
@@ -32,8 +25,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-    <body className={`${fontInter.variable} ${fontPoppins.variable} antialiased`}>
-      <Sidebar />
+    <body className={`${fontInter.variable} ${fontPoppins.variable} authPage antialiased`}>
       {children}
     </body>
     </html>
