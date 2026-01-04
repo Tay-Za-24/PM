@@ -4,6 +4,7 @@ import styles from "../css/auth.module.css";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import AnimatedText from "@/app/components/animText";
 
 const loginSchema = z.object({
   email: z.string().min(3, "Email must be at least 3 characters"),
@@ -22,7 +23,6 @@ export default function Login() {
   });
 
   const onSubmit = async (data: LoginFormData) => {
-    // call server action here
     console.log(data);
   };
 
@@ -34,7 +34,13 @@ export default function Login() {
 
       <section className={styles.authSection}>
         <div className={styles.formWrap}>
-          <h2 className={`${styles.authTitle} fw-bold`}>Login</h2>
+          <h2 className={`${styles.authTitle} fw-bold`}>
+            <AnimatedText
+            texts={[
+              'New Password'
+            ]}
+            />
+          </h2>
 
           <form
             className={styles.authForm}
@@ -52,7 +58,7 @@ export default function Login() {
                 {...register("email")}
                 aria-invalid={!!errors.email}
               />
-              <label htmlFor="email">Email</label>
+              <label htmlFor="new-password">New Password</label>
             </div>
             {errors.email && (
               <p className={styles.error}>

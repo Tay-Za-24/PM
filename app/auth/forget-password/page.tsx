@@ -4,6 +4,7 @@ import styles from "../css/auth.module.css";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import AnimatedText from "@/app/components/animText";
 
 const loginSchema = z.object({
   email: z.string().min(3, "Email must be at least 3 characters"),
@@ -32,7 +33,13 @@ export default function Login() {
 
       <section className={styles.authSection}>
         <div className={styles.formWrap}>
-          <h2 className={`${styles.authTitle} fw-bold`}>Reset Password</h2>
+          <h2 className={`${styles.authTitle} fw-bold`}>
+            <AnimatedText
+            texts={[
+              'Reset Password'
+            ]}
+            />
+          </h2>
 
           <form
             className={styles.authForm}
@@ -65,10 +72,13 @@ export default function Login() {
                 className={styles.submitBtn}
                 disabled={isSubmitting}
               >
-                {isSubmitting ? "Logging in..." : "Login"}
+                {isSubmitting ? "Submitting..." : "Submit"}
               </button>
             </div>
           </form>
+          <p className={styles.toRegister}>
+            Enter your email and we'll send you a link !
+          </p>
         </div>
       </section>
     </>

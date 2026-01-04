@@ -46,7 +46,6 @@ export default function Login() {
             texts={[
               'Login'
             ]}
-            extraClass="nothing"
             />
           </h2>
 
@@ -113,10 +112,16 @@ export default function Login() {
               </button>
             </div>
           </form>
-          <p>
+          <p className={styles.toRegister}>
             New here?
-            <Link href="/register">
+            <Link href="/auth/register" className={styles.linkTxt}>
               Create an account.
+            </Link>
+          </p>
+          <p className={styles.toRegister}>
+            Oops..
+            <Link href="/auth/forget-password" className={styles.linkTxt}>
+              Forgot your Password?
             </Link>
           </p>
         </div>
@@ -125,7 +130,6 @@ export default function Login() {
             texts={[
               "Still Under Construction."
             ]}
-            extraClass="dummy"
           />
         </Modal>
       </section>

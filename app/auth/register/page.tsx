@@ -8,28 +8,32 @@ import Modal from "../../components/modal";
 import icoGoogle from "../../../public/images/icons/ico-google.svg";
 import AnimatedText from "../../components/animText";
 import { useState } from "react";
+import Link from "next/link";
+import { api } from "@/app/utils/api";
+import { useRouter } from "next/navigation";
 
 const loginSchema = z
   .object({
-    displayName: z
+    name: z
       .string()
-      .min(2, "Display name must be at least 2 characters")
-      .max(30, "Display name is too long"),
+      .min(2, "Name must be at least 2 characters")
+      .max(30, "Name is too long"),
 
     email: z.email("Invalid email address"),
 
     password: z.string().min(8, "Password must be at least 8 characters"),
 
-    confirmPassword: z.string().min(8),
+    confirm_password: z.string().min(8),
   })
-  .refine((data) => data.password === data.confirmPassword, {
-    path: ["confirmPassword"],
+  .refine((data) => data.password === data.confirm_password, {
+    path: ["confirm_password"],
     message: "Passwords do not match",
   });
 
 type LoginFormData = z.infer<typeof loginSchema>;
 
 export default function Register() {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -39,8 +43,16 @@ export default function Register() {
   });
 
   const onSubmit = async (data: LoginFormData) => {
-    console.log(data);
-    // server action
+    try {
+        const result = await api("auth/register", {
+          method: "POST",
+          body: data,
+        });
+
+        router.push("/auth/login")
+      } catch (err: any) {
+        console.error("ERROR:", err);
+      }
   };
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -58,7 +70,6 @@ export default function Register() {
             texts={[
               'Create Account'
             ]}
-            extraClass="nothing"
             />
           </h2>
 
@@ -67,20 +78,20 @@ export default function Register() {
             onSubmit={handleSubmit(onSubmit)}
             noValidate
           >
-            {/* Display Name */}
+            {/* Name */}
             <div className={styles.inputWrap}>
               <input
                 placeholder=" "
-                id="displayName"
+                id="name"
                 type="text"
                 maxLength={30}
-                {...register("displayName")}
-                aria-invalid={!!errors.displayName}
+                {...register("name")}
+                aria-invalid={!!errors.name}
               />
-              <label htmlFor="displayName">Display Name</label>
+              <label htmlFor="name">Name</label>
             </div>
-            {errors.displayName && (
-              <p className={styles.error}>{errors.displayName.message}</p>
+            {errors.name && (
+              <p className={styles.error}>{errors.name.message}</p>
             )}
 
             {/* Email */}
@@ -106,7 +117,8 @@ export default function Register() {
                 placeholder=" "
                 id="password"
                 type="password"
-                autoComplete="new-password"
+                autoComplete="off"
+                // autoComplete="new-password"
                 maxLength={30}
                 {...register("password")}
                 aria-invalid={!!errors.password}
@@ -121,17 +133,17 @@ export default function Register() {
             <div className={styles.inputWrap}>
               <input
                 placeholder=" "
-                id="confirmPassword"
+                id="confirm_password"
                 type="password"
-                autoComplete="new-password"
+                autoComplete="off"
                 maxLength={30}
-                {...register("confirmPassword")}
-                aria-invalid={!!errors.confirmPassword}
+                {...register("confirm_password")}
+                aria-invalid={!!errors.confirm_password}
               />
-              <label htmlFor="confirmPassword">Confirm Password</label>
+              <label htmlFor="confirm_password">Confirm Password</label>
             </div>
-            {errors.confirmPassword && (
-              <p className={styles.error}>{errors.confirmPassword.message}</p>
+            {errors.confirm_password && (
+              <p className={styles.error}>{errors.confirm_password.message}</p>
             )}
 
             {/* Button */}
@@ -156,11 +168,16 @@ export default function Register() {
               </button>
             </div>
           </form>
+          <p className={styles.toRegister}>
+            Already has one?
+            <Link href="/auth/login" className={styles.linkTxt}>
+              Login Here.
+            </Link>
+          </p>
         </div>
         <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
           <AnimatedText
             texts={["Still Under Construction."]}
-            extraClass="dummy"
           />
         </Modal>
       </section>

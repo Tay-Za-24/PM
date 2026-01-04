@@ -157,6 +157,20 @@ input:-webkit-autofill ~ label {
   box-shadow: 0 5px 15px rgba(0,0,0,0.3);
 }
 
+.toRegister {
+    text-align: center;
+    margin-top: 1.25rem;
+}
+
+.toRegister .linkTxt {
+    margin-left: 5px;
+    transition: color .3s;
+}
+
+.toRegister .linkTxt:hover {
+    color: var(--clr-grey-500);
+}
+
 /* btn test styles */
 .btn-5 {
   border: 0 solid;

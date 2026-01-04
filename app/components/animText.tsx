@@ -7,10 +7,9 @@ import { text } from "stream/consumers";
 
 type TextProps = {
   texts: string[];
-  extraClass : string;
 };
 
-export default function AnimatedText({ texts, extraClass }: TextProps) {
+export default function AnimatedText({ texts }: TextProps) {
   const [activeIndex, setActiveIndex] = useState(0);
 
   const textRef = useRef<HTMLParagraphElement>(null);
@@ -83,7 +82,7 @@ export default function AnimatedText({ texts, extraClass }: TextProps) {
 
   return (
     <div ref={textRef} className="animWrap">
-      <p className={extraClass}>
+      <p>
         {currentText.split("").map((char, index) => (
           <span key={index} className="char">
             {char === " " ? "\u00A0" : char}
