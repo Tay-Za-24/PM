@@ -37,6 +37,7 @@ export default function Register() {
   const {
     register,
     handleSubmit,
+    setError,
     formState: { errors, isSubmitting },
   } = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
@@ -51,7 +52,12 @@ export default function Register() {
 
         router.push("/auth/login")
       } catch (err: any) {
-        console.error("ERROR:", err);
+        Object.entries(err.data.message).forEach(([field, messages]) => {
+          setError(field as keyof LoginFormData, {
+            type: "server",
+            message: (messages as string[])[0],
+          });
+        })
       }
   };
 
@@ -67,9 +73,7 @@ export default function Register() {
         <div className={styles.formWrap}>
           <h2 className={`${styles.authTitle} fw-bold`}>
             <AnimatedText
-            texts={[
-              'Create Account'
-            ]}
+            text = "Create Account"
             />
           </h2>
 
@@ -177,7 +181,7 @@ export default function Register() {
         </div>
         <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
           <AnimatedText
-            texts={["Still Under Construction."]}
+            text="Still Under Construction. "
           />
         </Modal>
       </section>

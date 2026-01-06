@@ -43,9 +43,7 @@ export default function Login() {
         <div className={styles.formWrap}>
           <h2 className={`${styles.authTitle} fw-bold`}>
             <AnimatedText
-            texts={[
-              'Login'
-            ]}
+              text="Login"
             />
           </h2>
 
@@ -127,9 +125,7 @@ export default function Login() {
         </div>
         <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
           <AnimatedText
-            texts={[
-              "Still Under Construction."
-            ]}
+            text="Still Under Construction"
           />
         </Modal>
       </section>

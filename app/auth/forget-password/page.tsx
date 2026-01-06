@@ -35,9 +35,7 @@ export default function Login() {
         <div className={styles.formWrap}>
           <h2 className={`${styles.authTitle} fw-bold`}>
             <AnimatedText
-            texts={[
-              'Reset Password'
-            ]}
+              text="Forget Password"
             />
           </h2>
 
