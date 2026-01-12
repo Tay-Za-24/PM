@@ -10,7 +10,6 @@ export async function api(
   endpoint: string,
   { method = "GET", body, token }: ApiOptions = {}
 ) {
-    console.log(body)
   const res = await fetch(`${API_BASE}${endpoint}`, {
     method,
     headers: {
@@ -21,7 +20,13 @@ export async function api(
     body: body ? JSON.stringify(body) : undefined,
   });
 
-  const data = await res.json();
+  // 🔎 safer error parsing
+  let data;
+  try {
+    data = await res.json();
+  } catch {
+    data = null;
+  }
 
   if (!res.ok) {
     throw { status: res.status, data };
