@@ -9,7 +9,6 @@ import { useState } from "react";
 import Modal from "../../components/modal";
 import AnimatedText from "../../components/animText";
 import Link from "next/link";
-import { api } from "@/app/utils/api";
 
 const FormSchema = z.object({
   email: z.string().min(3, "Email must be at least 3 characters"),
@@ -27,25 +26,29 @@ export default function LoginForm() {
     resolver: zodResolver(FormSchema),
   });
 
-  const onSubmit = async (data: FormData) => {
-    try {
-      const res = await api("auth/login", {
-        method: "POST",
-        body: data,
-      });
+const onSubmit = async (data: FormData) => {
+  try {
+    const res = await fetch("/api/auth/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
 
-      console.log("LOGIN SUCCESS ✅", res);
-    } catch (err: any) {
-      console.log("LOGIN ERROR ❌", err);
-    }
-  };
+    if (!res.ok) throw await res.json();
+
+    console.log("LOGIN SUCCESS ✅");
+  } catch (err) {
+    console.log("LOGIN ERROR ❌", err);
+  }
+};
+
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
     <>
       <header>
-        <h1 className={styles.authLogo}>Logo</h1>
+        <h1 className={styles.authLogo}>Logo</h1>``
       </header>
 
       <section className={styles.authSection}>
