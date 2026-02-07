@@ -1,6 +1,5 @@
 "use client";
 
-import styles from "../css/auth.module.css";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -28,24 +27,24 @@ export default function ForgetPasswordForm() {
   return (
     <>
       <header>
-        <h1 className={styles.authLogo}>Logo</h1>
+        <h1 className="authLogo">Logo</h1>
       </header>
 
-      <section className={styles.authSection}>
-        <div className={styles.formWrap}>
-          <h2 className={`${styles.authTitle} fw-bold`}>
+      <section className="authSection">
+        <div className="formWrap">
+          <h2 className="authTitle fw-bold">
             <AnimatedText
               text="Forget Password"
             />
           </h2>
 
           <form
-            className={styles.authForm}
+            className="authForm"
             onSubmit={handleSubmit(onSubmit)}
             noValidate
           >
             {/* email */}
-            <div className={styles.inputWrap}>
+            <div className="inputWrap">
               <input
                 placeholder=" "
                 id="email"
@@ -58,23 +57,23 @@ export default function ForgetPasswordForm() {
               <label htmlFor="email">Email</label>
             </div>
             {errors.email && (
-              <p className={styles.error}>
+              <p className="error">
                 {errors.email.message}
               </p>
             )}
 
             {/* Button */}
-            <div className={styles.btnWrap}>
+            <div className="btnWrap">
               <button
                 type="submit"
-                className={styles.submitBtn}
+                className="submitBtn"
                 disabled={isSubmitting}
               >
                 {isSubmitting ? "Submitting..." : "Submit"}
               </button>
             </div>
           </form>
-          <p className={styles.toRegister}>
+          <p className="toRegister">
             Enter your email and we'll send you a link !
           </p>
         </div>

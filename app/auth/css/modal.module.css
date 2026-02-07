@@ -1,0 +1,21 @@
+@charset "utf-8";
+
+/* modal styles */
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: grid;
+  place-items: center;
+  z-index: 1000;
+}
+
+.modalContent {
+  background: var(--foreground);
+  color: var(--background);
+  padding: 2rem;
+  border-radius: .625rem;
+  min-width: 300px;
+  max-width: 90%;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}

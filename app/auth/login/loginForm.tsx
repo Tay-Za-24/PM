@@ -1,6 +1,5 @@
 "use client";
 
-import styles from "../css/auth.module.css";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import icoGoogle from "../../../public/images/icons/ico-google.svg";
@@ -48,24 +47,24 @@ const onSubmit = async (data: FormData) => {
   return (
     <>
       <header>
-        <h1 className={styles.authLogo}>Logo</h1>``
+        <h1 className="authLogo">Logo</h1>
       </header>
 
-      <section className={styles.authSection}>
-        <div className={styles.formWrap}>
-          <h2 className={`${styles.authTitle} fw-bold`}>
+      <section className="authSection">
+        <div className="formWrap">
+          <h2 className="authTitle fw-bold">
             <AnimatedText
               text="Login"
             />
           </h2>
 
           <form
-            className={styles.authForm}
+            className="authForm"
             onSubmit={handleSubmit(onSubmit)}
             noValidate
           >
             {/* email */}
-            <div className={styles.inputWrap}>
+            <div className="inputWrap">
               <input
                 placeholder=" "
                 id="email"
@@ -78,11 +77,11 @@ const onSubmit = async (data: FormData) => {
               <label htmlFor="email">Email</label>
             </div>
             {errors.email && (
-              <p className={styles.error}>{errors.email.message}</p>
+              <p className="error">{errors.email.message}</p>
             )}
 
             {/* Password */}
-            <div className={styles.inputWrap}>
+            <div className="inputWrap">
               <input
                 placeholder=" "
                 id="password"
@@ -95,14 +94,14 @@ const onSubmit = async (data: FormData) => {
               <label htmlFor="password">Password</label>
             </div>
             {errors.password && (
-              <p className={styles.error}>{errors.password.message}</p>
+              <p className="error">{errors.password.message}</p>
             )}
 
             {/* Button */}
-            <div className={styles.btnWrap}>
+            <div className="btnWrap">
               <button
                 type="submit"
-                className={styles.submitBtn}
+                className="submitBtn"
                 disabled={isSubmitting}
               >
                 {isSubmitting ? "Loading..." : "Continue"}
@@ -110,27 +109,27 @@ const onSubmit = async (data: FormData) => {
               <button
                 type="button"
                 onClick={() => setIsModalOpen(true)}
-                className={styles.submitBtn}
+                className="submitBtn"
                 disabled={isSubmitting}
               >
-                <div className={styles.btnIco}>
+                <div className="btnIco">
                   <img src={icoGoogle.src} />
                 </div>
-                <span className={styles.btnText}>
+                <span className="btnText">
                   Continue with Google
                 </span>
               </button>
             </div>
           </form>
-          <p className={styles.toRegister}>
+          <p className="toRegister">
             New here?
-            <Link href="/auth/register" className={styles.linkTxt}>
+            <Link href="/auth/register" className="linkTxt">
               Create an account.
             </Link>
           </p>
-          <p className={styles.toRegister}>
+          <p className="toRegister">
             Oops..
-            <Link href="/auth/forget-password" className={styles.linkTxt}>
+            <Link href="/auth/forget-password" className="linkTxt">
               Forgot your Password?
             </Link>
           </p>

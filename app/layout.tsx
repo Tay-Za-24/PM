@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Poppins } from "next/font/google";
 import "./globals.css";
+import "./auth/css/auth.css";
 
 const fontInter = Inter({
   variable: "--font-primary",

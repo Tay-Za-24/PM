@@ -1,6 +1,5 @@
 "use client";
 
-import styles from "../css/auth.module.css";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -66,22 +65,22 @@ export default function RegisterForm() {
   return (
     <>
       <header>
-        <h1 className={styles.authLogo}>Logo</h1>
+        <h1 className="authLogo">Logo</h1>
       </header>
 
-      <section className={styles.authSection}>
-        <div className={styles.formWrap}>
-          <h2 className={`${styles.authTitle} fw-bold`}>
+      <section className="authSection">
+        <div className="formWrap">
+          <h2 className="authTitle fw-bold">
             <AnimatedText text="Create Account" />
           </h2>
 
           <form
-            className={styles.authForm}
+            className="authForm"
             onSubmit={handleSubmit(onSubmit)}
             noValidate
           >
             {/* Name */}
-            <div className={styles.inputWrap}>
+            <div className="inputWrap">
               <input
                 placeholder=" "
                 id="name"
@@ -92,11 +91,11 @@ export default function RegisterForm() {
               <label htmlFor="name">Name</label>
             </div>
             {errors.name && (
-              <p className={styles.error}>{errors.name.message}</p>
+              <p className="error">{errors.name.message}</p>
             )}
 
             {/* Email */}
-            <div className={styles.inputWrap}>
+            <div className="inputWrap">
               <input
                 placeholder=" "
                 id="email"
@@ -107,11 +106,11 @@ export default function RegisterForm() {
               <label htmlFor="email">Email</label>
             </div>
             {errors.email && (
-              <p className={styles.error}>{errors.email.message}</p>
+              <p className="error">{errors.email.message}</p>
             )}
 
             {/* Password */}
-            <div className={styles.inputWrap}>
+            <div className="inputWrap">
               <input
                 placeholder=" "
                 id="password"
@@ -122,11 +121,11 @@ export default function RegisterForm() {
               <label htmlFor="password">Password</label>
             </div>
             {errors.password && (
-              <p className={styles.error}>{errors.password.message}</p>
+              <p className="error">{errors.password.message}</p>
             )}
 
             {/* Confirm Password */}
-            <div className={styles.inputWrap}>
+            <div className="inputWrap">
               <input
                 placeholder=" "
                 id="confirm_password"
@@ -137,16 +136,16 @@ export default function RegisterForm() {
               <label htmlFor="confirm_password">Confirm Password</label>
             </div>
             {errors.confirm_password && (
-              <p className={styles.error}>
+              <p className="error">
                 {errors.confirm_password.message}
               </p>
             )}
 
             {/* Buttons */}
-            <div className={styles.btnWrap}>
+            <div className="btnWrap">
               <button
                 type="submit"
-                className={styles.submitBtn}
+                className="submitBtn"
                 disabled={isSubmitting}
               >
                 {isSubmitting ? "Submitting..." : "Create Account"}
@@ -155,21 +154,21 @@ export default function RegisterForm() {
               <button
                 type="button"
                 onClick={() => setIsModalOpen(true)}
-                className={styles.submitBtn}
+                className="submitBtn"
               >
-                <div className={styles.btnIco}>
+                <div className="btnIco">
                   <img src={icoGoogle.src} alt="" />
                 </div>
-                <span className={styles.btnText}>
+                <span className="btnText">
                   Continue with Google
                 </span>
               </button>
             </div>
           </form>
 
-          <p className={styles.toRegister}>
+          <p className="toRegister">
             Already has one?
-            <Link href="/auth/login" className={styles.linkTxt}>
+            <Link href="/auth/login" className="linkTxt">
               Login Here.
             </Link>
           </p>
