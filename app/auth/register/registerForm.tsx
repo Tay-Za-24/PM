@@ -34,6 +34,7 @@ type FormData = z.infer<typeof FormSchema>;
 export default function RegisterForm() {
   const router = useRouter();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [apiError, setApiError] = useState(false);
 
   const {
     register,
@@ -46,19 +47,24 @@ export default function RegisterForm() {
 
   const onSubmit = async (data: FormData) => {
     try {
+      setApiError(false);
+
       await api("auth/register", {
         method: "POST",
         body: data,
       });
-
       router.push("/auth/login");
     } catch (err: any) {
-      Object.entries(err.data.message).forEach(([field, messages]) => {
-        setError(field as keyof FormData, {
-          type: "server",
-          message: (messages as string[])[0],
+      if (err?.data?.message) {
+        Object.entries(err.data.message).forEach(([field, messages]) => {
+          setError(field as keyof FormData, {
+            type: "server",
+            message: (messages as string[])[0],
+          });
         });
-      });
+      } else {
+        setApiError(true);
+      }
     }
   };
 
@@ -73,7 +79,9 @@ export default function RegisterForm() {
           <h2 className="authTitle fw-bold">
             <AnimatedText text="Create Account" />
           </h2>
-
+          {apiError && (
+            <p className="api-error d-block">Server Error. Please Try again.</p>
+          )}
           <form
             className="authForm"
             onSubmit={handleSubmit(onSubmit)}
@@ -90,9 +98,7 @@ export default function RegisterForm() {
               />
               <label htmlFor="name">Name</label>
             </div>
-            {errors.name && (
-              <p className="error">{errors.name.message}</p>
-            )}
+            {errors.name && <p className="error">{errors.name.message}</p>}
 
             {/* Email */}
             <div className="inputWrap">
@@ -105,9 +111,7 @@ export default function RegisterForm() {
               />
               <label htmlFor="email">Email</label>
             </div>
-            {errors.email && (
-              <p className="error">{errors.email.message}</p>
-            )}
+            {errors.email && <p className="error">{errors.email.message}</p>}
 
             {/* Password */}
             <div className="inputWrap">
@@ -136,9 +140,7 @@ export default function RegisterForm() {
               <label htmlFor="confirm_password">Confirm Password</label>
             </div>
             {errors.confirm_password && (
-              <p className="error">
-                {errors.confirm_password.message}
-              </p>
+              <p className="error">{errors.confirm_password.message}</p>
             )}
 
             {/* Buttons */}
@@ -159,9 +161,7 @@ export default function RegisterForm() {
                 <div className="btnIco">
                   <img src={icoGoogle.src} alt="" />
                 </div>
-                <span className="btnText">
-                  Continue with Google
-                </span>
+                <span className="btnText">Continue with Google</span>
               </button>
             </div>
           </form>

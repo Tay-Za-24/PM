@@ -26,6 +26,15 @@
     height: 100vh;
 }
 
+.authSection .api-error {
+    padding: .625rem;
+    color: var(--background);
+    background-color: var(--clr-error);
+    border-radius: 10px;
+    margin-bottom: 1.25rem;
+    display: none;
+}
+
 .authForm {
     width: 18.75rem;
 }
@@ -111,7 +120,7 @@ input:-webkit-autofill ~ label {
     align-items: center;
     justify-content: center;
     gap: .625rem;
-    transition: background-color .3s ease, color .3s ease, border-color .3s ease;
+    transition: opacity .3s ease;
 }
 
 .authForm .submitBtn .btnIco {
@@ -121,13 +130,7 @@ input:-webkit-autofill ~ label {
 }
 
 .authForm .submitBtn:hover {
-    background-color: var(--background);
-    color: var(--foreground);
-    border-color: var(--foreground);
-}
-
-.authForm .submitBtn:hover .btnIco {
-    filter: none;
+    opacity: .8;
 }
 
 .authForm .btnWrap {
@@ -148,5 +151,48 @@ input:-webkit-autofill ~ label {
 }
 
 .toRegister .linkTxt:hover {
-    color: var(--clr-grey-500);
+    color: var(--clr-grey-600);
+}
+
+.createSection {
+    display: flex;
+    height: 100vh;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 6.25rem;
+    gap: 3.75rem;
+}
+
+.createSection .authForm {
+    width: 28.125rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+}
+
+.createSection .authForm .submitBtn {
+    padding: 1.875rem 1.25rem;
+    border-radius: .625rem;
+    gap: 1.875rem;
+}
+
+.createSection .submitBtn .btn-ttl {
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+.submitBtn .ico-btn::before {
+    content: "";
+    display: inline-block;
+    width: 1.5rem;
+    height: 1.5rem;
+    filter: invert(1);
+}
+
+.submitBtn .ico-btn.ico-private::before {
+    background: url(../../../public/images/icons/ico_lock.png) no-repeat center/contain;
+}
+
+.submitBtn .ico-btn.ico-public::before {
+    background: url(../../../public/images/icons/ico_pulbic.png) no-repeat center/contain;
 }

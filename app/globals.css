@@ -4,6 +4,8 @@
   --background: #ffffff;
   --foreground: #171717;
   --clr-grey-500: #c5c3c6;
+  --clr-grey-600: #6c757d;
+  --clr-error: #DC143C;
 }
 
 @theme inline {

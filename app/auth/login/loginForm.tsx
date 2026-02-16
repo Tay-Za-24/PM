@@ -35,9 +35,9 @@ const onSubmit = async (data: FormData) => {
 
     if (!res.ok) throw await res.json();
 
-    console.log("LOGIN SUCCESS ✅");
+    console.log("LOGIN SUCCESS");
   } catch (err) {
-    console.log("LOGIN ERROR ❌", err);
+    console.log("LOGIN ERROR", err);
   }
 };
 
