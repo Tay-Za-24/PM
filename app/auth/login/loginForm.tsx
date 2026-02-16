@@ -8,6 +8,7 @@ import { useState } from "react";
 import Modal from "../../components/modal";
 import AnimatedText from "../../components/animText";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const FormSchema = z.object({
   email: z.string().min(3, "Email must be at least 3 characters"),
@@ -17,6 +18,8 @@ const FormSchema = z.object({
 type FormData = z.infer<typeof FormSchema>;
 
 export default function LoginForm() {
+  const router = useRouter();
+
   const {
     register,
     handleSubmit,
@@ -25,21 +28,32 @@ export default function LoginForm() {
     resolver: zodResolver(FormSchema),
   });
 
-const onSubmit = async (data: FormData) => {
-  try {
-    const res = await fetch("/api/auth/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    });
+  const onSubmit = async (data: FormData) => {
+    try {
+      const res = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
 
-    if (!res.ok) throw await res.json();
+      const responseData = await res.json();
 
-    console.log("LOGIN SUCCESS");
-  } catch (err) {
-    console.log("LOGIN ERROR", err);
-  }
-};
+      if (!res.ok) throw responseData;
+
+      const workspaceCode =
+        responseData?.user?.last_workspace_code ??
+        responseData?.data?.user?.last_workspace_code;
+
+      if (workspaceCode) {
+        router.push(`/?workspace=${workspaceCode}`);
+        return;
+      }
+
+      router.push("/create/workspace");
+    } catch (err) {
+      console.log("LOGIN ERROR", err);
+    }
+  };
 
 
   const [isModalOpen, setIsModalOpen] = useState(false);
