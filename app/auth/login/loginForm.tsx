@@ -8,6 +8,7 @@ import { useState } from "react";
 import Modal from "../../components/modal";
 import AnimatedText from "../../components/animText";
 import Link from "next/link";
+import { api } from "@/app/utils/api";
 import { useRouter } from "next/navigation";
 
 const FormSchema = z.object({
@@ -19,41 +20,50 @@ type FormData = z.infer<typeof FormSchema>;
 
 export default function LoginForm() {
   const router = useRouter();
+  const [apiError, setApiError] = useState(false);
 
   const {
     register,
     handleSubmit,
+    setError,
     formState: { errors, isSubmitting },
   } = useForm<FormData>({
     resolver: zodResolver(FormSchema),
   });
 
-  const onSubmit = async (data: FormData) => {
-    try {
-      const res = await fetch("/api/auth/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
+const onSubmit = async (data: FormData) => {
+  try {
+    setApiError(false);
 
-      const responseData = await res.json();
+    const responseData = await api("auth/login", {
+      method: "POST",
+      body: data,
+    });
 
-      if (!res.ok) throw responseData;
+    const workspaceCode =
+      responseData?.user?.last_workspace_code ??
+      responseData?.data?.user?.last_workspace_code;
 
-      const workspaceCode =
-        responseData?.user?.last_workspace_code ??
-        responseData?.data?.user?.last_workspace_code;
-
-      if (workspaceCode) {
-        router.push(`/?workspace=${workspaceCode}`);
-        return;
-      }
-
-      router.push("/create/workspace");
-    } catch (err) {
-      console.log("LOGIN ERROR", err);
+    if (workspaceCode) {
+      router.push(`/?workspace=${workspaceCode}`);
+      return;
     }
-  };
+
+    router.push("/create/workspace");
+  } catch (err: any) {
+    if (err?.data?.message) {
+      Object.entries(err.data.message).forEach(([field, messages]) => {
+        setError(field as keyof FormData, {
+          type: "server",
+          message: (messages as string[])[0],
+        });
+      });
+    } else {
+      setApiError(true);
+    }
+  }
+};
+
 
 
   const [isModalOpen, setIsModalOpen] = useState(false);

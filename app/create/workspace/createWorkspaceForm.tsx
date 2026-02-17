@@ -7,7 +7,7 @@ import { api } from "@/app/utils/api";
 import AnimatedText from "@/app/components/animText";
 
 const FormSchema = z.object({
-  workSpaceName: z.string().min(3, "workSpaceName must be at least 3 characters"),
+  workspace_name: z.string().min(3, "workspace_name must be at least 3 characters"),
 });
 
 type FormData = z.infer<typeof FormSchema>;
@@ -16,6 +16,7 @@ export default function CreateWorkspaceForm() {
     const {
       register,
       handleSubmit,
+      setError,
       formState: { errors, isSubmitting },
     } = useForm<FormData>({
       resolver: zodResolver(FormSchema),
@@ -50,17 +51,17 @@ export default function CreateWorkspaceForm() {
               <div className="inputWrap">
                 <input
                   placeholder=" "
-                  id="workSpaceName"
+                  id="workspace_name"
                   type="text"
-                  autoComplete="workSpaceName"
+                  autoComplete="workspace_name"
                   maxLength={30}
-                  {...register("workSpaceName")}
-                  aria-invalid={!!errors.workSpaceName}
+                  {...register("workspace_name")}
+                  aria-invalid={!!errors.workspace_name}
                 />
-                <label htmlFor="workSpaceName">Your WorkSpace Name</label>
+                <label htmlFor="workspace_name">Your WorkSpace Name</label>
               </div>
-              {errors.workSpaceName && (
-                <p className="error">{errors.workSpaceName.message}</p>
+              {errors.workspace_name && (
+                <p className="error">{errors.workspace_name.message}</p>
               )}
               <div className="submitBtn">
                 <div className="ico-btn ico-private"></div>
