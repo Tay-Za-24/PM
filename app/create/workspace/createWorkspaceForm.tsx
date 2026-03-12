@@ -11,7 +11,7 @@ import { useRouter } from "next/navigation";
 const FormSchema = z.object({
   workspace_name: z
     .string()
-    .min(3, "workspace_name must be at least 3 characters"),
+    .min(3, "Workspace Name must be at least 3 characters"),
 });
 
 type FormData = z.infer<typeof FormSchema>;
@@ -49,13 +49,7 @@ export default function CreateWorkspaceForm() {
         },
       });
 
-      const workspaceCode =
-        responseData?.workspace_code ??
-        responseData?.data?.workspace_code ??
-        responseData?.workspace?.workspace_code ??
-        responseData?.data?.workspace?.workspace_code ??
-        responseData?.workspace?.code ??
-        responseData?.data?.workspace?.code;
+    const workspaceCode = responseData?.data?.workspace_code;
 
       if (workspaceCode) {
         router.push(`/?workspace=${workspaceCode}`);
@@ -89,21 +83,23 @@ export default function CreateWorkspaceForm() {
         )}
         <section>
           <form className="authForm create" onSubmit={handleSubmit(onSubmit)} noValidate>
-            <div className="inputWrap">
-              <input
-                placeholder=" "
-                id="workspace_name"
-                type="text"
-                autoComplete="workspace_name"
-                maxLength={30}
-                {...register("workspace_name")}
-                aria-invalid={!!errors.workspace_name}
-              />
-              <label htmlFor="workspace_name">Your WorkSpace Name</label>
+            <div>
+              <div className="inputWrap">
+                <input
+                  placeholder=" "
+                  id="workspace_name"
+                  type="text"
+                  autoComplete="workspace_name"
+                  maxLength={30}
+                  {...register("workspace_name")}
+                  aria-invalid={!!errors.workspace_name}
+                />
+                <label htmlFor="workspace_name">Your WorkSpace Name</label>
+              </div>
+              {errors.workspace_name && (
+                <p className="error">{errors.workspace_name.message}</p>
+              )}
             </div>
-            {errors.workspace_name && (
-              <p className="error">{errors.workspace_name.message}</p>
-            )}
             <button
               type="submit"
               value="private"

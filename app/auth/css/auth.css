@@ -118,6 +118,7 @@ input:-webkit-autofill ~ label {
     width: 100%;
     display: flex;
     align-items: center;
+    text-align: left;
     justify-content: center;
     gap: .625rem;
     transition: opacity .3s ease;
