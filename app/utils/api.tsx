@@ -2,7 +2,7 @@ const API_BASE = process.env.NEXT_PUBLIC_API_URL!;
 
 type ApiOptions = {
   method?: "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
-  body?: any;
+  body?: unknown;
   token?: string;
 };
 
@@ -21,7 +21,7 @@ export async function api(
   });
 
   // 🔎 safer error parsing
-  let data;
+  let data: unknown;
   try {
     data = await res.json();
   } catch {

@@ -54,9 +54,10 @@ export default function RegisterForm() {
         body: data,
       });
       router.push("/auth/login");
-    } catch (err: any) {
-      if (err?.data?.message) {
-        Object.entries(err.data.message).forEach(([field, messages]) => {
+    } catch (err: unknown) {
+      const apiErr = err as { data?: { message?: Record<string, string[]> } };
+      if (apiErr?.data?.message) {
+        Object.entries(apiErr.data.message).forEach(([field, messages]) => {
           setError(field as keyof FormData, {
             type: "server",
             message: (messages as string[])[0],

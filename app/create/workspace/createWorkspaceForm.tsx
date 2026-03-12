@@ -5,13 +5,14 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { api } from "@/app/utils/api";
 import AnimatedText from "@/app/components/animText";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 const FormSchema = z.object({
   workspace_name: z
     .string()
     .min(3, "Workspace Name must be at least 3 characters"),
+  token: z.string().min(1, "Token is required"),
 });
 
 type FormData = z.infer<typeof FormSchema>;
@@ -24,10 +25,18 @@ export default function CreateWorkspaceForm() {
     register,
     handleSubmit,
     setError,
+    setValue,
     formState: { errors, isSubmitting },
   } = useForm<FormData>({
     resolver: zodResolver(FormSchema),
   });
+
+  useEffect(() => {
+    const storedToken = localStorage.getItem("access_token");
+    if (storedToken) {
+      setValue("token", storedToken);
+    }
+  }, [setValue]);
 
   const onSubmit = async (
     data: FormData,
@@ -43,16 +52,17 @@ export default function CreateWorkspaceForm() {
 
       const responseData = await api("workspace/create", {
         method: "POST",
+        token: data.token,
         body: {
-          ...data,
+          workspace_name: data.workspace_name,
           is_private: isPrivate,
         },
       });
 
-    const workspaceCode = responseData?.data?.workspace_code;
+      const workspaceCode = responseData?.data?.workspace_code;
 
       if (workspaceCode) {
-        router.push(`/?workspace=${workspaceCode}`);
+        router.push(`/workspace/${workspaceCode}`);
         return;
       }
 
@@ -99,6 +109,21 @@ export default function CreateWorkspaceForm() {
               {errors.workspace_name && (
                 <p className="error">{errors.workspace_name.message}</p>
               )}
+            </div>
+            <div>
+              <div className="inputWrap">
+                <input
+                  placeholder=" "
+                  id="token"
+                  type="text"
+                  autoComplete="off"
+                  maxLength={300}
+                  {...register("token")}
+                  aria-invalid={!!errors.token}
+                />
+                <label htmlFor="token">Access Token</label>
+              </div>
+              {errors.token && <p className="error">{errors.token.message}</p>}
             </div>
             <button
               type="submit"
