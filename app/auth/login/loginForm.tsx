@@ -31,38 +31,46 @@ export default function LoginForm() {
     resolver: zodResolver(FormSchema),
   });
 
-const onSubmit = async (data: FormData) => {
-  try {
-    setApiError(false);
+  const onSubmit = async (data: FormData) => {
+    try {
+      setApiError(false);
 
-    const responseData = await api("auth/login", {
-      method: "POST",
-      body: data,
-    });
-
-    const workspaceCode =
-      responseData?.user?.last_workspace_code ??
-      responseData?.data?.user?.last_workspace_code;
-
-    if (workspaceCode) {
-      router.push(`/?workspace=${workspaceCode}`);
-      return;
-    }
-
-    router.push("/create/workspace");
-  } catch (err: any) {
-    if (err?.data?.message) {
-      Object.entries(err.data.message).forEach(([field, messages]) => {
-        setError(field as keyof FormData, {
-          type: "server",
-          message: (messages as string[])[0],
-        });
+      const responseData = await api("auth/login", {
+        method: "POST",
+        body: data,
       });
-    } else {
-      setApiError(true);
+
+      const accessToken =
+        responseData?.access_token ?? responseData?.data?.access_token;
+
+      if (accessToken) {
+        localStorage.setItem("access_token", accessToken);
+      }
+
+      const workspaceCode =
+        responseData?.user?.last_workspace_code ??
+        responseData?.data?.user?.last_workspace_code;
+
+      if (workspaceCode) {
+        router.push(`/workspace/${workspaceCode}`);
+        return;
+      }
+
+      router.push("/create/workspace");
+    } catch (err: unknown) {
+      const apiErr = err as { data?: { message?: Record<string, string[]> } };
+      if (apiErr?.data?.message) {
+        Object.entries(apiErr.data.message).forEach(([field, messages]) => {
+          setError(field as keyof FormData, {
+            type: "server",
+            message: (messages as string[])[0],
+          });
+        });
+      } else {
+        setApiError(true);
+      }
     }
-  }
-};
+  };
 
 
 
@@ -87,6 +95,9 @@ const onSubmit = async (data: FormData) => {
             onSubmit={handleSubmit(onSubmit)}
             noValidate
           >
+            {apiError && (
+              <p className="api-error d-block">Server Error. Please Try again.</p>
+            )}
             {/* email */}
             <div className="inputWrap">
               <input
@@ -137,7 +148,7 @@ const onSubmit = async (data: FormData) => {
                 disabled={isSubmitting}
               >
                 <div className="btnIco">
-                  <img src={icoGoogle.src} />
+                  <img src={icoGoogle.src} alt="" />
                 </div>
                 <span className="btnText">
                   Continue with Google

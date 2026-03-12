@@ -74,7 +74,7 @@ export default function ForgetPasswordForm() {
             </div>
           </form>
           <p className="toRegister">
-            Enter your email and we'll send you a link !
+            Enter your email and we&apos;ll send you a link !
           </p>
         </div>
       </section>
